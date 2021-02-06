@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace StopWatch
 {
@@ -22,7 +23,7 @@ namespace StopWatch
         {
             currentTime--;
 
-            alert.Text = currentTime.ToString();
+            //alert.Text = currentTime.ToString();
 
             int hourCount = currentTime / 3600;
             int minCount = (currentTime - hourCount * 3600) / 60;
@@ -34,8 +35,10 @@ namespace StopWatch
 
             if (currentTime <= 0)
             {
+                SystemSounds.Asterisk.Play();                
                 timer1.Stop();
                 start.Text = "Start";
+                //MessageBox.Show("Time's up!");
             }
         }
 
@@ -59,7 +62,7 @@ namespace StopWatch
                 timer1.Stop();
                 start.Text = "Start";
             }
-            else if (second.Text != "" || minute.Text != "" || hour.Text != "")
+            else if (second.Text != "" && second.Text != "0" || minute.Text != "" && minute.Text != "0" || hour.Text != "" && hour.Text != "0")
             {
                 int seconds = (second.Text == "") ? 0 : int.Parse(second.Text);
                 int minutes = (minute.Text == "") ? 0 : int.Parse(minute.Text);
@@ -70,13 +73,13 @@ namespace StopWatch
                 timer1.Start();
                 start.Text = "Pause";
             }
-            else
-                alert.Text = "Укажите время";
+            //else
+                //alert.Text = "Укажите время";
         }
 
         private void second_TextChanged(object sender, EventArgs e)
         {
-            alert.Text = "";
+            //alert.Text = "";
         }
 
         private void hour_TextChanged(object sender, EventArgs e)
@@ -113,8 +116,17 @@ namespace StopWatch
             else
             {
                 if (text != "")
+                {
                     if (int.Parse(text) > 5)
                         e.Handled = true;
+                }                    
+                else
+                {
+                    if (text.Length == 0)
+                        if (e.KeyChar == (char)48 || e.KeyChar == (char)96)
+                            e.Handled = true;
+                }
+                    
 
                 if (!char.IsDigit(e.KeyChar))
                     e.Handled = true;
