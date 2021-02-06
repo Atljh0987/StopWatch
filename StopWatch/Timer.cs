@@ -111,6 +111,14 @@ namespace StopWatch
 
         private void KPress(object sender, KeyPressEventArgs e, string text)
         {
+            if (text == "0")
+            {
+                second.Text = "";
+                minute.Text = "";
+                hour.Text = "";
+            }
+                
+
             if (e.KeyChar == (char)8)
                 e.Handled = false;
             else
@@ -125,8 +133,7 @@ namespace StopWatch
                     if (text.Length == 0)
                         if (e.KeyChar == (char)48 || e.KeyChar == (char)96)
                             e.Handled = true;
-                }
-                    
+                }                    
 
                 if (!char.IsDigit(e.KeyChar))
                     e.Handled = true;

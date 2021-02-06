@@ -36,6 +36,7 @@ namespace StopWatch
             this.second = new System.Windows.Forms.TextBox();
             this.minute = new System.Windows.Forms.TextBox();
             this.hour = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // timer1
@@ -46,7 +47,7 @@ namespace StopWatch
             // start
             // 
             this.start.Font = new System.Drawing.Font("Arial Narrow", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.start.Location = new System.Drawing.Point(12, 98);
+            this.start.Location = new System.Drawing.Point(12, 133);
             this.start.Name = "start";
             this.start.Size = new System.Drawing.Size(121, 50);
             this.start.TabIndex = 0;
@@ -57,7 +58,7 @@ namespace StopWatch
             // stop
             // 
             this.stop.Font = new System.Drawing.Font("Arial Narrow", 18F, System.Drawing.FontStyle.Bold);
-            this.stop.Location = new System.Drawing.Point(149, 98);
+            this.stop.Location = new System.Drawing.Point(150, 133);
             this.stop.Name = "stop";
             this.stop.Size = new System.Drawing.Size(130, 50);
             this.stop.TabIndex = 1;
@@ -68,18 +69,21 @@ namespace StopWatch
             // second
             // 
             this.second.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.second.Location = new System.Drawing.Point(194, 12);
+            this.second.Location = new System.Drawing.Point(194, 47);
+            this.second.MaxLength = 2;
             this.second.Name = "second";
+            this.second.ShortcutsEnabled = false;
             this.second.Size = new System.Drawing.Size(85, 80);
             this.second.TabIndex = 2;
             this.second.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.second.WordWrap = false;
             this.second.TextChanged += new System.EventHandler(this.second_TextChanged);
             this.second.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.second_KeyPress);
             // 
             // minute
             // 
             this.minute.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F);
-            this.minute.Location = new System.Drawing.Point(103, 12);
+            this.minute.Location = new System.Drawing.Point(103, 47);
             this.minute.Name = "minute";
             this.minute.Size = new System.Drawing.Size(85, 80);
             this.minute.TabIndex = 4;
@@ -90,23 +94,34 @@ namespace StopWatch
             // hour
             // 
             this.hour.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F);
-            this.hour.Location = new System.Drawing.Point(12, 12);
+            this.hour.Location = new System.Drawing.Point(12, 47);
             this.hour.Name = "hour";
             this.hour.Size = new System.Drawing.Size(85, 80);
             this.hour.TabIndex = 5;
             this.hour.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.hour.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.hour_KeyPress);
             // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox1.Location = new System.Drawing.Point(12, 12);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(267, 29);
+            this.textBox1.TabIndex = 6;
+            // 
             // Timer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 160);
+            this.ClientSize = new System.Drawing.Size(292, 194);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.hour);
             this.Controls.Add(this.minute);
             this.Controls.Add(this.second);
             this.Controls.Add(this.stop);
             this.Controls.Add(this.start);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Timer";
             this.Text = "Timer";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -123,6 +138,7 @@ namespace StopWatch
         private System.Windows.Forms.TextBox second;
         private System.Windows.Forms.TextBox minute;
         private System.Windows.Forms.TextBox hour;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
