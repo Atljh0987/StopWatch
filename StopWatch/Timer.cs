@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
 
@@ -19,11 +12,9 @@ namespace StopWatch
             InitializeComponent();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void mainTimer_Tick(object sender, EventArgs e)
         {
             currentTime--;
-
-            //alert.Text = currentTime.ToString();
 
             int hourCount = currentTime / 3600;
             int minCount = (currentTime - hourCount * 3600) / 60;
@@ -34,90 +25,76 @@ namespace StopWatch
             second.Text = secCount.ToString();
 
             if (currentTime <= 0)
-            {
-                SystemSounds.Asterisk.Play();                
-                timer1.Stop();
+            {                                    
+                mainTimer.Stop();
                 start.Text = "Start";
-                //MessageBox.Show("Time's up!");
+
+                second.ReadOnly = minute.ReadOnly = hour.ReadOnly = false;
+
+                signalTimer.Start();
+                SystemSounds.Asterisk.Play();
+
+                DialogResult res = MessageBox.Show((notification.Text == "")? "Time's up!" : notification.Text);
+
+                if (res == DialogResult.OK)
+                    signalTimer.Stop();
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void stop_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
+            mainTimer.Stop();
             start.Text = "Start";
             currentTime = 0;
             second.Text = minute.Text = hour.Text = "";
+            second.ReadOnly = minute.ReadOnly = hour.ReadOnly = false;
         }
 
         private void start_Click(object sender, EventArgs e)
         {
-            if (timer1.Enabled)
+            if (mainTimer.Enabled)
             {
-                timer1.Stop();
+                mainTimer.Stop();
                 start.Text = "Start";
             }
-            else if (second.Text != "" && second.Text != "0" || minute.Text != "" && minute.Text != "0" || hour.Text != "" && hour.Text != "0")
+            else if (second.Text != "" && second.Text != "0" || 
+                     minute.Text != "" && minute.Text != "0" || 
+                     hour.Text != "" && hour.Text != "0")
             {
                 int seconds = (second.Text == "") ? 0 : int.Parse(second.Text);
                 int minutes = (minute.Text == "") ? 0 : int.Parse(minute.Text);
                 int hours = (hour.Text == "") ? 0 : int.Parse(hour.Text);
 
                 if(currentTime == 0) currentTime = seconds + minutes * 60 + hours * 3600;
-                timer1.Interval = 1;
-                timer1.Start();
+                mainTimer.Interval = 1;
+                mainTimer.Start();
                 start.Text = "Pause";
+
+                second.ReadOnly = true;
+                minute.ReadOnly = true;
+                hour.ReadOnly = true;
             }
-            //else
-                //alert.Text = "Укажите время";
-        }
-
-        private void second_TextChanged(object sender, EventArgs e)
-        {
-            //alert.Text = "";
-        }
-
-        private void hour_TextChanged(object sender, EventArgs e)
-        {
-            second_TextChanged(sender, e);
-        }
-
-        private void minute_TextChanged(object sender, EventArgs e)
-        {
-            second_TextChanged(sender, e);
         }
 
         // ---------------------
 
-        private void second_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            KPress(sender, e, second.Text);          
-        }
-
-        private void minute_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            KPress(sender, e, minute.Text);
-        }
-
-        private void hour_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            KPress(sender, e, hour.Text);
-        }
+        private void second_KeyPress(object sender, KeyPressEventArgs e) => KPress(sender, e, second.Text);
+        private void minute_KeyPress(object sender, KeyPressEventArgs e) => KPress(sender, e, minute.Text);
+        private void hour_KeyPress(object sender, KeyPressEventArgs e) => KPress(sender, e, hour.Text);
 
         private void KPress(object sender, KeyPressEventArgs e, string text)
         {
+            if (e.KeyChar == (char)13)
+            {
+                start_Click(this, new EventArgs());
+            }
+
             if (text == "0")
             {
                 second.Text = "";
                 minute.Text = "";
                 hour.Text = "";
-            }
-                
+            }                
 
             if (e.KeyChar == (char)8)
                 e.Handled = false;
@@ -139,5 +116,7 @@ namespace StopWatch
                     e.Handled = true;
             }
         }
+
+        private void signalTimer_Tick_1(object sender, EventArgs e) => SystemSounds.Asterisk.Play();
     }
 }
