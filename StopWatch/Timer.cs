@@ -34,7 +34,11 @@ namespace StopWatch
                 signalTimer.Start();
                 SystemSounds.Asterisk.Play();
 
-                DialogResult res = MessageBox.Show((notification.Text == "")? "Time's up!" : notification.Text);
+                DialogResult res = MessageBox.Show(new Form() { TopMost = true }, 
+                 (notification.Text.Trim() == "") ? "Time's up!" : notification.Text.Trim(),
+                 "Finish",
+                 MessageBoxButtons.OK,
+                 MessageBoxIcon.Question);
 
                 if (res == DialogResult.OK)
                     signalTimer.Stop();
@@ -66,13 +70,12 @@ namespace StopWatch
                 int hours = (hour.Text == "") ? 0 : int.Parse(hour.Text);
 
                 if(currentTime == 0) currentTime = seconds + minutes * 60 + hours * 3600;
-                mainTimer.Interval = 1;
+
+                mainTimer.Interval = 1000;
                 mainTimer.Start();
                 start.Text = "Pause";
 
-                second.ReadOnly = true;
-                minute.ReadOnly = true;
-                hour.ReadOnly = true;
+                second.ReadOnly = minute.ReadOnly = hour.ReadOnly = true;
             }
         }
 
@@ -81,6 +84,7 @@ namespace StopWatch
         private void second_KeyPress(object sender, KeyPressEventArgs e) => KPress(sender, e, second.Text);
         private void minute_KeyPress(object sender, KeyPressEventArgs e) => KPress(sender, e, minute.Text);
         private void hour_KeyPress(object sender, KeyPressEventArgs e) => KPress(sender, e, hour.Text);
+        private void notification_KeyPress(object sender, KeyPressEventArgs e) => KPress(sender, e, hour.Text);
 
         private void KPress(object sender, KeyPressEventArgs e, string text)
         {

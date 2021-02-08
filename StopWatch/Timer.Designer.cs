@@ -30,6 +30,7 @@ namespace StopWatch
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Timer));
             this.mainTimer = new System.Windows.Forms.Timer(this.components);
             this.start = new System.Windows.Forms.Button();
             this.stop = new System.Windows.Forms.Button();
@@ -109,6 +110,7 @@ namespace StopWatch
             this.notification.Name = "notification";
             this.notification.Size = new System.Drawing.Size(267, 29);
             this.notification.TabIndex = 6;
+            this.notification.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.notification_KeyPress);
             // 
             // signalTimer
             // 
@@ -128,6 +130,7 @@ namespace StopWatch
             this.Controls.Add(this.stop);
             this.Controls.Add(this.start);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Timer";
